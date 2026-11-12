@@ -1,0 +1,36 @@
+contract_id: chipcheck_rpi_interaction_v1
+device:
+  platform: raspberry_pi
+  target_output: buzzer
+  control_representation: pwm_duty_cycle
+  pwm_frequency_hz: 1000
+  gpio_numbering: BCM
+inputs:
+  led1_value: {type: integer, min: 0, max: 255, step: 1, gpio_bcm: 18}
+  led2_value: {type: integer, min: 0, max: 255, step: 1, gpio_bcm: 19}
+  led3_value: {type: integer, min: 0, max: 255, step: 1, gpio_bcm: 13}
+output:
+  name: buzzer
+  control_gpio_bcm: 26
+  feedback_gpio_bcm: 21
+  active_high: true
+  stimulus_duration_ms: 250
+  settle_time_ms: 100
+  observation_window_ms: 500
+  requirement:
+    min_sound_level_db: null
+    min_frequency_hz: null
+    max_response_time_ms: null
+    require_buzzer_detected: true
+campaign:
+  maximum_experiments: 1000
+  confirmation_repetitions: 3
+safety:
+  prohibited_combinations: []
+  safe_state: {led1_value: 0, led2_value: 0, led3_value: 0, buzzer_enabled: false}
+measurement:
+  backend: digital_feedback
+  feedback_active_level: 1
+  adc_bridge_serial_port: null
+  adc_bridge_baud: 115200
+
